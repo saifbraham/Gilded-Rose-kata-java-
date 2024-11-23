@@ -3,13 +3,13 @@ package com.gildedrose;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class GildedRoseTest {
 
     private GildedRose app;
     private Item[] items;
-    public static final int ARGS =10;
+    public static final int DAYS =10;
 
     @BeforeEach
     void setUp() {
@@ -25,16 +25,20 @@ class GildedRoseTest {
     }
 
     @Test
-    void foo() {
-        Item[] items = new Item[] { new Item("foo", 0, 0) };
+    void shouldNotChangeItemNameWhenUpdatingQuality() {
+        Item[] items = new Item[] { new Item("Aged Brie", 0, 0) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("fixme", app.items[0].name);
+        assertThat("Aged Brie").isEqualTo(app.getItems()[0].getName());
     }
 
     @Test
-    void textTestFixture(){
-        for (int i = 0; i < ARGS; i++) {
+    void givenMultipleDays_whenUpdateQualityIsCalled_thenItemsAreUpdatedCorrectly(){
+
+        // TODO
+        // Avoid using System.out.println statements in test methods; instead, use assertions to validate the behavior.
+
+        for (int i = 0; i < DAYS; i++) {
             System.out.println("-------- day " + i + " --------");
             System.out.println("name, sellIn, quality");
             for (Item item : items) {
