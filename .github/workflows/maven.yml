@@ -41,3 +41,4 @@ jobs:
         with:
           directory: '.'
           ignore-maven-wrapper: true
+          token: ${{ secrets.PNB_KATA_SECRET }}
