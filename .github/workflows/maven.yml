@@ -33,7 +33,7 @@ jobs:
           cache: maven
 
       - name: Set up Maven
-        uses: s4u/setup-maven-action@v1.14.0
+        uses: s4u/setup-maven-action@v1.16.0
         with:
           maven-version: '3.8.6' # Specify the desired Maven version
 
