@@ -34,8 +34,7 @@ class GildedRoseTest {
 
     @Test
     void textTestFixture(){
-        int days = ARGS;
-        for (int i = 0; i < days; i++) {
+        for (int i = 0; i < ARGS; i++) {
             System.out.println("-------- day " + i + " --------");
             System.out.println("name, sellIn, quality");
             for (Item item : items) {
