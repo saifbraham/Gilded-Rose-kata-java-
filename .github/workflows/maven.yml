@@ -33,9 +33,8 @@ jobs:
           cache: maven
 
       - name: Set up Maven
-        uses: actions/setup-java@v4
+        uses: s4u/setup-maven-action@v1
         with:
-          distribution: 'maven'
           maven-version: '3.8.6' 
 
       - name: Build with Maven
