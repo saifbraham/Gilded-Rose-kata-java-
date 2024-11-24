@@ -7,56 +7,88 @@ class GildedRose {
         this.items = items;
     }
 
+    private boolean isAgedBrie(Item item) {
+        return "Aged Brie".equals(item.getName());
+    }
+
+    private boolean isBackstagePass(Item item) {
+        return "Backstage passes to a TAFKAL80ETC concert".equals(item.getName());
+    }
+
+    private boolean isDexterityVest(Item item) {
+        return "+5 Dexterity Vest".equals(item.getName());
+    }
+
+    private boolean isElixirMongoose(Item item) {
+        return "Elixir of the Mongoose".equals(item.getName());
+    }
+
+    private void increaseQuality(Item item) {
+        item.setQuality(item.getQuality() + 1);
+    }
+
+    private void decreaseQuality(Item item) {
+        item.setQuality(item.getQuality() - 1);
+    }
+
+    private void decreaseSellIn(Item item) {
+        item.setSellIn(item.getSellIn() - 1);
+    }
+
+    private void handleBackstagePass(Item item) {
+        if (item.getQuality() < 50) {
+            increaseQuality(item);
+        }
+        if (item.getSellIn() < 11) {
+            increaseQuality(item);
+        }
+        if (item.getSellIn() < 6) {
+            increaseQuality(item);
+        }
+
+        if (item.getQuality() > 50) {
+            item.setQuality(50);
+        }
+        decreaseSellIn(item);
+        if (item.getSellIn() < 0) {
+            item.setQuality(0);
+        }
+    }
+
+    private void handleAgedBrie(Item item) {
+        if (item.getQuality() < 50) {
+            increaseQuality(item);
+        }
+        decreaseSellIn(item);
+        if (item.getSellIn() < 0 && item.getQuality() < 50) {
+            increaseQuality(item);
+        }
+    }
+
+    private void handleDexterityVestElixirMongooseConjuredManaCake(Item item) {
+        if (item.getQuality() > 0) {
+            decreaseQuality(item);
+        }
+        decreaseSellIn(item);
+        if (item.getSellIn() < 0 && item.getQuality() > 0) {
+            decreaseQuality(item);
+        }
+    }
+
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
-            if (!items[i].getName().equals("Aged Brie")
-                    && !items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].getQuality() > 0) {
-                    if (!items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].setQuality(items[i].getQuality() - 1);
-                    }
-                }
-            } else {
-                if (items[i].getQuality() < 50) {
-                    items[i].setQuality(items[i].getQuality() + 1);
 
-                    if (items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].getSellIn() < 11) {
-                            if (items[i].getQuality() < 50) {
-                                items[i].setQuality(items[i].getQuality() + 1);
-                            }
-                        }
-
-                        if (items[i].getSellIn() < 6) {
-                            if (items[i].getQuality() < 50) {
-                                items[i].setQuality(items[i].getQuality() + 1);
-                            }
-                        }
-                    }
-                }
+            if (isDexterityVest(items[i]) ||
+                isElixirMongoose(items[i])) {
+                handleDexterityVestElixirMongooseConjuredManaCake(items[i]);
             }
 
-            if (!items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].setSellIn(items[i].getSellIn() - 1);
-            }
+            if (isBackstagePass(items[i]))
+                handleBackstagePass(items[i]);
 
-            if (items[i].getSellIn() < 0) {
-                if (!items[i].getName().equals("Aged Brie")) {
-                    if (!items[i].getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].getQuality() > 0) {
-                            if (!items[i].getName().equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].setQuality(items[i].getQuality() - 1);
-                            }
-                        }
-                    } else {
-                        items[i].setQuality(items[i].getQuality() - items[i].getQuality());
-                    }
-                } else {
-                    if (items[i].getQuality() < 50) {
-                        items[i].setQuality(items[i].getQuality() + 1);
-                    }
-                }
-            }
+            if (isAgedBrie(items[i]))
+                handleAgedBrie(items[i]);
+
         }
     }
 
@@ -64,7 +96,4 @@ class GildedRose {
         return items;
     }
 
-    public void setItems(Item[] items) {
-        this.items = items;
-    }
 }
