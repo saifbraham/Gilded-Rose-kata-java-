@@ -136,17 +136,6 @@ class GildedRoseTest {
 
         // Assert
 
-        // Expected item names after 10 days
-        String[] expectedNames = {
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert"
-        };
 
         // Expected sellIn values after 10 days
         int[] expectedSellIn = {-10, -9, -11, -5, 0, -4, 1, 5};
@@ -160,9 +149,6 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
-                .as("Item %d: Name", i+1)
-                .isEqualTo(expectedNames[i]);
             softly.assertThat(item.getSellIn())
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
@@ -201,17 +187,6 @@ class GildedRoseTest {
 
         // Assert
 
-        // Expected item names after 10 days
-        String[] expectedNames = {
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert"
-        };
-
         // Expected sellIn values after 10 days
         int[] expectedSellIn = {9, 20, 8, 8, 1, -1, 9};
 
@@ -224,9 +199,6 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
-                .as("Item %d: Name", i+1)
-                .isEqualTo(expectedNames[i]);
             softly.assertThat(item.getSellIn())
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
@@ -262,15 +234,6 @@ class GildedRoseTest {
 
         // Assert
 
-        // Expected item names after 10 days
-        String[] expectedNames = {
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert",
-            "Backstage passes to a TAFKAL80ETC concert"
-
-        };
-
 
         // Expected sellIn values after 10 days
         int[] expectedSellIn = {3, 1, 1, 8};
@@ -284,9 +247,6 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
-                .as("Item %d: Name", i+1)
-                .isEqualTo(expectedNames[i]);
             softly.assertThat(item.getSellIn())
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
@@ -347,6 +307,108 @@ class GildedRoseTest {
             softly.assertThat(item.getName())
                 .as("Item %d: Name", i+1)
                 .isEqualTo(expectedNames[i]);
+            softly.assertThat(item.getSellIn())
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.getQuality())
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
+    @Test
+    @DisplayName("Aged brie item - increase quality by 1 if sellIn > 0 and max value 50")
+    void givenAgedBrieItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalled_thenShouldIncreaseQualityByOneAndMaxValueIsFifty(){
+
+        // Arrange
+
+        int days = 5;
+        items = new Item[] {
+            new Item("Aged Brie", 12, 44),
+            new Item("Aged Brie", 11, 43),
+            new Item("Aged Brie", 10, 42),
+            new Item("Aged Brie", 9, 45),
+            new Item("Aged Brie", 8, 38),
+            new Item("Aged Brie", 7, 49),
+            new Item("Aged Brie", 6, 48),
+            new Item("Aged Brie", 5, 50)
+        };
+        app = new GildedRose(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            app.updateQuality();
+        }
+
+        // Assert
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {7, 6, 5, 4, 3, 2, 1, 0};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {49, 48, 47, 50, 43, 50, 50, 50};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            softly.assertThat(item.getSellIn())
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.getQuality())
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
+    @Test
+    @DisplayName("Aged brie item - increase quality by 2 if sellIn < 0 and max value 50")
+    void givenAgedBrieItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalledAndSellInInfToZero_thenShouldIncreaseQualityByTwoAndMaxValueIsFifty(){
+
+        // Arrange
+
+        int days = 4;
+        items = new Item[] {
+            new Item("Aged Brie", 6, 44),
+            new Item("Aged Brie", 5, 30),
+            new Item("Aged Brie", 4, 32),
+            new Item("Aged Brie", 3, 44),
+            new Item("Aged Brie", 2, 45),
+            new Item("Aged Brie", 1, 46),
+            new Item("Aged Brie", 0, 48),
+            new Item("Aged Brie", 5, 38)
+        };
+        app = new GildedRose(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            app.updateQuality();
+        }
+
+        // Assert
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {2, 1, 0, -1, -2, -3, -4, 1};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {48, 34, 36, 49, 50, 50, 50, 42};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
             softly.assertThat(item.getSellIn())
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
