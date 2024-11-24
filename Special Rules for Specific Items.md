@@ -10,3 +10,10 @@ Once the concert date passes (SellIn <= 0), the Quality drops to 0.
 **Increases in Quality** as it ages (by **1** daily).\
 After the `SellIn` date, the Quality increases by **2** daily.\
 The Quality still cannot exceed 50.
+
+### 3. DexterityVest, ElixirMongoose and ConjuredManaCake
+Quality decreases as the `SellIn` value approaches:
+- Decreases by 1 when `SellIn` value positive.
+- Decreases by 2 when `SellIn` value negative.
+
+Quality evaluated by a positive value
