@@ -1,34 +1,58 @@
 package com.gildedrose;
 
 class GildedRose {
-    private Item[] items;
+
+    private static final int MAX_QUALITY = 50;
+    private static final int MIN_QUALITY = 0;
+
+    private final Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
+    public Item[] getItems() {
+        return items;
+    }
+
+    public void updateQuality() {
+        for (Item item : items) {
+            if (isStandardItem(item)) {
+                handleStandardItem(item);
+            } else if (isBackstagePass(item)) {
+                handleBackstagePass(item);
+            } else if (isAgedBrie(item)) {
+                handleAgedBrie(item);
+            }
+        }
+    }
+
     private boolean isAgedBrie(Item item) {
-        return "Aged Brie".equals(item.getName());
+        return SpecialItem.AGED_BRIE.getItemName().equals(item.getName());
     }
 
     private boolean isBackstagePass(Item item) {
-        return "Backstage passes to a TAFKAL80ETC concert".equals(item.getName());
+        return SpecialItem.BACKSTAGE_PASS.getItemName().equals(item.getName());
     }
 
-    private boolean isDexterityVest(Item item) {
-        return "+5 Dexterity Vest".equals(item.getName());
+    private boolean isSulfuras(Item item) {
+        return SpecialItem.SULFURAS.getItemName().equals(item.getName());
     }
 
-    private boolean isElixirMongoose(Item item) {
-        return "Elixir of the Mongoose".equals(item.getName());
+    private boolean isStandardItem(Item item) {
+        return !isAgedBrie(item) && !isBackstagePass(item) && !isSulfuras(item);
     }
 
     private void increaseQuality(Item item) {
-        item.setQuality(item.getQuality() + 1);
+        if (item.getQuality() < MAX_QUALITY) {
+            item.setQuality(item.getQuality() + 1);
+        }
     }
 
     private void decreaseQuality(Item item) {
-        item.setQuality(item.getQuality() - 1);
+        if (item.getQuality() > MIN_QUALITY) {
+            item.setQuality(item.getQuality() - 1);
+        }
     }
 
     private void decreaseSellIn(Item item) {
@@ -36,64 +60,34 @@ class GildedRose {
     }
 
     private void handleBackstagePass(Item item) {
-        if (item.getQuality() < 50) {
+        if (item.getSellIn() > 0) {
             increaseQuality(item);
-        }
-        if (item.getSellIn() < 11) {
-            increaseQuality(item);
-        }
-        if (item.getSellIn() < 6) {
-            increaseQuality(item);
-        }
-
-        if (item.getQuality() > 50) {
-            item.setQuality(50);
+            if (item.getSellIn() <= 10) {
+                increaseQuality(item);
+            }
+            if (item.getSellIn() <= 5) {
+                increaseQuality(item);
+            }
+        } else {
+            item.setQuality(MIN_QUALITY); // Quality drops to 0 after the concert
         }
         decreaseSellIn(item);
-        if (item.getSellIn() < 0) {
-            item.setQuality(0);
-        }
     }
 
     private void handleAgedBrie(Item item) {
-        if (item.getQuality() < 50) {
-            increaseQuality(item);
-        }
+        increaseQuality(item);
         decreaseSellIn(item);
-        if (item.getSellIn() < 0 && item.getQuality() < 50) {
-            increaseQuality(item);
+        if (item.getSellIn() < 0) {
+            increaseQuality(item); // Aged Brie improves further after sell date
         }
     }
 
-    private void handleDexterityVestElixirMongooseConjuredManaCake(Item item) {
-        if (item.getQuality() > 0) {
-            decreaseQuality(item);
-        }
+    private void handleStandardItem(Item item) {
+        decreaseQuality(item);
         decreaseSellIn(item);
-        if (item.getSellIn() < 0 && item.getQuality() > 0) {
-            decreaseQuality(item);
+        if (item.getSellIn() < 0) {
+            decreaseQuality(item); // Quality decreases further after sell date
         }
-    }
-
-    public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-
-            if (isDexterityVest(items[i]) ||
-                isElixirMongoose(items[i])) {
-                handleDexterityVestElixirMongooseConjuredManaCake(items[i]);
-            }
-
-            if (isBackstagePass(items[i]))
-                handleBackstagePass(items[i]);
-
-            if (isAgedBrie(items[i]))
-                handleAgedBrie(items[i]);
-
-        }
-    }
-
-    public Item[] getItems() {
-        return items;
     }
 
 }
