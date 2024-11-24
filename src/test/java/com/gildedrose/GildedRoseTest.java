@@ -421,5 +421,155 @@ class GildedRoseTest {
         softly.assertAll();
     }
 
+    @Test
+    @DisplayName("DexterityVest_ElixirMongoose_ConjuredManaCake item - decrease quality by 1 if sellIn > 0 and min value 0")
+    void givenDexterityVestElixirMongooseConjuredManaCakeItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalled_thenShouldDecreaseQualityByOneAndMinValueIsZero(){
+
+        // Arrange
+
+        int days = 5;
+        items = new Item[] {
+            new Item("+5 Dexterity Vest", 6, 5),
+            new Item("+5 Dexterity Vest", 4, 3),
+            new Item("+5 Dexterity Vest", 2, 1),
+            new Item("+5 Dexterity Vest", 7, 10),
+            new Item("Elixir of the Mongoose", 6, 5),
+            new Item("Elixir of the Mongoose", 4, 3),
+            new Item("Elixir of the Mongoose", 2, 1),
+            new Item("Elixir of the Mongoose", 4, 8),
+            new Item("Conjured Mana Cake", 6, 5),
+            new Item("Conjured Mana Cake", 4, 3),
+            new Item("Conjured Mana Cake", 2, 1),
+            new Item("Conjured Mana Cake", 2, 9)
+
+        };
+        app = new GildedRose(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            app.updateQuality();
+        }
+
+        // Assert
+
+        // Expected item names after 10 days
+        String[] expectedNames = {
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake"
+        };
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {1, -1, -3, 2, 1, -1, -3, -1, 1, -1, -3, -3};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {0, 0, 0, 5, 0, 0, 0, 2, 0, 0, 0, 1};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            softly.assertThat(item.getName())
+                .as("Item %d: Name", i+1)
+                .isEqualTo(expectedNames[i]);
+            softly.assertThat(item.getSellIn())
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.getQuality())
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
+    @Test
+    @DisplayName("DexterityVest_ElixirMongoose_ConjuredManaCake item - decrease quality by 2 if sellIn < 0 and min value 0")
+    void givenDexterityVestElixirMongooseConjuredManaCakeItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalled_thenShouldDecreaseQualityByTwoAndMinValueIsZero(){
+
+        // Arrange
+
+        int days = 6;
+        items = new Item[] {
+            new Item("+5 Dexterity Vest", 6, 15),
+            new Item("+5 Dexterity Vest", 4, 20),
+            new Item("+5 Dexterity Vest", 2, 12),
+            new Item("+5 Dexterity Vest", 7, 10),
+            new Item("Elixir of the Mongoose", 6, 15),
+            new Item("Elixir of the Mongoose", 4, 20),
+            new Item("Elixir of the Mongoose", 2, 12),
+            new Item("Elixir of the Mongoose", 4, 10),
+            new Item("Conjured Mana Cake", 6, 15),
+            new Item("Conjured Mana Cake", 4, 20),
+            new Item("Conjured Mana Cake", 2, 12),
+            new Item("Conjured Mana Cake", 2, 10)
+
+        };
+        app = new GildedRose(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            app.updateQuality();
+        }
+
+        // Assert
+
+        // Expected item names after 10 days
+        String[] expectedNames = {
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "+5 Dexterity Vest",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Elixir of the Mongoose",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake",
+            "Conjured Mana Cake"
+        };
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {0, -2, -4, 1, 0, -2, -4, -2, 0, -2, -4, -4};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {9, 12, 2, 4, 9, 12, 2, 2, 9, 12, 2, 0};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            softly.assertThat(item.getName())
+                .as("Item %d: Name", i+1)
+                .isEqualTo(expectedNames[i]);
+            softly.assertThat(item.getSellIn())
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.getQuality())
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
 
 }
