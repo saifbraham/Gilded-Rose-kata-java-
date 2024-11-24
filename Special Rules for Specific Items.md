@@ -6,4 +6,7 @@ Quality increases as the `SellIn` value approaches:
  - Increases by 3 when there are 1–5 days remaining.
 
 Once the concert date passes (SellIn <= 0), the Quality drops to 0.
-
+### 2. Aged Brie
+**Increases in Quality** as it ages (by **1** daily).\
+After the `SellIn` date, the Quality increases by **2** daily.\
+The Quality still cannot exceed 50.
