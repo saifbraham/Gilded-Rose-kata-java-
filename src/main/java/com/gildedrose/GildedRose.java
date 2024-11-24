@@ -19,28 +19,22 @@ class GildedRose {
         for (Item item : items) {
             if (isStandardItem(item)) {
                 handleStandardItem(item);
-            } else if (isBackstagePass(item)) {
+            } else if (isSpecialItem(item, SpecialItem.BACKSTAGE_PASS)) {
                 handleBackstagePass(item);
-            } else if (isAgedBrie(item)) {
+            } else if (isSpecialItem(item, SpecialItem.AGED_BRIE)) {
                 handleAgedBrie(item);
             }
         }
     }
 
-    private boolean isAgedBrie(Item item) {
-        return SpecialItem.AGED_BRIE.getItemName().equals(item.getName());
-    }
-
-    private boolean isBackstagePass(Item item) {
-        return SpecialItem.BACKSTAGE_PASS.getItemName().equals(item.getName());
-    }
-
-    private boolean isSulfuras(Item item) {
-        return SpecialItem.SULFURAS.getItemName().equals(item.getName());
+    private boolean isSpecialItem(Item item, SpecialItem specialItem) {
+        return specialItem.getItemName().equals(item.getName());
     }
 
     private boolean isStandardItem(Item item) {
-        return !isAgedBrie(item) && !isBackstagePass(item) && !isSulfuras(item);
+        return !isSpecialItem(item, SpecialItem.AGED_BRIE) &&
+            !isSpecialItem(item, SpecialItem.BACKSTAGE_PASS) &&
+            !isSpecialItem(item, SpecialItem.SULFURAS);
     }
 
     private void increaseQuality(Item item) {
