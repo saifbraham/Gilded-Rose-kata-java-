@@ -1,5 +1,6 @@
 package com.gildedrose;
 
+import com.gildedrose.model.Item;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 
@@ -25,11 +26,11 @@ class GildedRoseTest {
 
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertThat("+5 Dexterity Vest").isEqualTo(app.getItems()[0].getName());
-        assertThat("Aged Brie").isEqualTo(app.getItems()[1].getName());
-        assertThat("Elixir of the Mongoose").isEqualTo(app.getItems()[2].getName());
-        assertThat("Sulfuras, Hand of Ragnaros").isEqualTo(app.getItems()[3].getName());
-        assertThat("Backstage passes to a TAFKAL80ETC concert").isEqualTo(app.getItems()[4].getName());
+        assertThat("+5 Dexterity Vest").isEqualTo(app.getItems()[0].name);
+        assertThat("Aged Brie").isEqualTo(app.getItems()[1].name);
+        assertThat("Elixir of the Mongoose").isEqualTo(app.getItems()[2].name);
+        assertThat("Sulfuras, Hand of Ragnaros").isEqualTo(app.getItems()[3].name);
+        assertThat("Backstage passes to a TAFKAL80ETC concert").isEqualTo(app.getItems()[4].name);
     }
 
     @Test
@@ -90,13 +91,13 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
+            softly.assertThat(item.name)
                 .as("Item %d: Name", i+1)
                 .isEqualTo(expectedNames[i]);
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -146,10 +147,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -197,10 +198,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -246,10 +247,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -304,13 +305,13 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
+            softly.assertThat(item.name)
                 .as("Item %d: Name", i+1)
                 .isEqualTo(expectedNames[i]);
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -359,10 +360,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -411,10 +412,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -458,10 +459,10 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -522,13 +523,13 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
+            softly.assertThat(item.name)
                 .as("Item %d: Name", i+1)
                 .isEqualTo(expectedNames[i]);
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
@@ -589,13 +590,13 @@ class GildedRoseTest {
         // Iterate over each item and assert its properties
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
-            softly.assertThat(item.getName())
+            softly.assertThat(item.name)
                 .as("Item %d: Name", i+1)
                 .isEqualTo(expectedNames[i]);
-            softly.assertThat(item.getSellIn())
+            softly.assertThat(item.sellIn)
                 .as("Item %d: SellIn", i+1)
                 .isEqualTo(expectedSellIn[i]);
-            softly.assertThat(item.getQuality())
+            softly.assertThat(item.quality)
                 .as("Item %d: Quality", i+1)
                 .isEqualTo(expectedQuality[i]);
         }
