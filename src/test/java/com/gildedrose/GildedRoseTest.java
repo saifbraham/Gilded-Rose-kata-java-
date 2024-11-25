@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import com.gildedrose.model.Item;
+import com.gildedrose.model.ItemBuilder;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 
@@ -16,8 +17,8 @@ class GildedRoseTest {
     @DisplayName("Check items name and order after update quality call")
     @Order(0)
     void shouldNotChangeItemNameWhenUpdatingQuality() {
-        Item[] items = new Item[] {
-            new Item("+5 Dexterity Vest", 0, 0),
+            items = new Item[] {
+            new ItemBuilder().withName("+5 Dexterity Vest").withSellIn(0).withQuality(0).build(),
             new Item("Aged Brie", 0, 0),
             new Item("Elixir of the Mongoose", 0, 0),
             new Item("Sulfuras, Hand of Ragnaros", 0, 0),

@@ -17,21 +17,12 @@ public class GildedRose {
     private void initializeItemMap() {
         for (Item item : items) {
             String uniqueKey = generateUniqueKey(item);
-            itemMap.put(uniqueKey, createUpdatableItem(item));
+            itemMap.put(uniqueKey, UpdatableItemFactory.createUpdatableItem(item));
         }
     }
 
     private String generateUniqueKey(Item item) {
         return String.format("%s_%d_%d", item.name, item.sellIn, item.quality);
-    }
-
-    private UpdatableItem createUpdatableItem(Item item) {
-        return switch (item.name) {
-            case "Aged Brie" -> new AgedBrie(item);
-            case "Backstage passes to a TAFKAL80ETC concert" -> new BackstagePass(item);
-            case "Sulfuras, Hand of Ragnaros" -> new Sulfuras(item);
-            default -> new StandardItem(item);
-        };
     }
 
     public void updateQuality() {
