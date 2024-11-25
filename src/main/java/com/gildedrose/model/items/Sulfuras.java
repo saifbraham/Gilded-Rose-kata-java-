@@ -1,4 +1,7 @@
-package com.gildedrose.model;
+package com.gildedrose.model.items;
+
+import com.gildedrose.model.AbstractItem;
+import com.gildedrose.model.Item;
 
 public class Sulfuras extends AbstractItem {
     public Sulfuras(Item item) {

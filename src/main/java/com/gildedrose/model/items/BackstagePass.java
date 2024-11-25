@@ -1,4 +1,7 @@
-package com.gildedrose.model;
+package com.gildedrose.model.items;
+
+import com.gildedrose.model.AbstractItem;
+import com.gildedrose.model.Item;
 
 public class BackstagePass extends AbstractItem {
     public BackstagePass(Item item) {
