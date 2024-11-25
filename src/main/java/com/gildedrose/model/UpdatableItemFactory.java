@@ -1,5 +1,7 @@
 package com.gildedrose.model;
 
+import com.gildedrose.model.items.StandardItem;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
