@@ -1,4 +1,35 @@
-# To set up the Java version as a Maven project in your Integrated Development Environment (IDE),  follow these steps:
+# Gilded Rose starting position in Java
+
+## Run the TextTest Fixture from Command-Line
+
+```
+./gradlew -q text
+```
+
+### Specify Number of Days
+
+For e.g. 10 days:
+
+```
+./gradlew -q text --args 10
+```
+
+You should make sure the gradle commands shown above work when you execute them in a terminal before trying to use TextTest (see below).
+
+
+## Run the TextTest approval test that comes with this project
+
+There are instructions in the [TextTest Readme](../texttests/README.md) for setting up TextTest. What's unusual for the Java version is there are two executables listed in [config.gr](../texttests/config.gr) for Java. The first uses Gradle wrapped in a python script. Uncomment these lines to use it:
+
+    executable:${TEXTTEST_HOME}/Java/texttest_rig.py
+    interpreter:python
+
+The other relies on your CLASSPATH being set correctly in [environment.gr](../texttests/environment.gr). Uncomment these lines to use it instead:
+
+    executable:com.gildedrose.TexttestFixture
+    interpreter:java
+
+## To set up the Java version as a Maven project in your Integrated Development Environment (IDE), follow these steps:
 
 ### 1. Clone the Repository:
 
@@ -7,7 +38,7 @@ Open your terminal or command prompt.
 Execute the following command to clone the repository:
 
 ```
-git clone https://github.com/saifbraham/Gilded-Rose-kata-java-.git
+git clone https://github.com/emilybache/GildedRose-Refactoring-Kata.git
 ```
 
 This will create a directory named GildedRose-Refactoring-Kata containing the project files.
@@ -70,50 +101,3 @@ Go to `Run > Edit Configurations...` in the menu.
 In the Run/Debug Configurations dialog, locate the configuration for `YourTestMainClass`.
 
 In the `Program arguments` field, enter the arguments you wish to pass to the `main` method. For example: `10`.
-
-
-
-
-
-# General Rules for Quality:
-### Maximum Quality:
-
- - The Quality of an item is never more than 50 (except for "Sulfuras," which has a fixed Quality of 80).
-
-### Minimum Quality:
-
- - The Quality of an item is never less than 0.
-
-### Daily Degradation:
-
- - The Quality of an item decreases by 1 every day.
-
-### Expired Items:
-
- - Once the SellIn value is 0 or less, the Quality of the item decreases twice as fast (i.e., by 2 daily).
-
-
-
-# Special Rules for Specific Items:
-### 1. Backstage Passes to a TAFKAL80ETC Concert:
-Quality increases as the `SellIn` value approaches:
- - Increases by 1 when there are more than 10 days remaining.
- - Increases by 2 when there are 6–10 days remaining.
- - Increases by 3 when there are 1–5 days remaining.
-
-Once the concert date passes (SellIn <= 0), the Quality drops to 0.
-### 2. Aged Brie
-**Increases in Quality** as it ages (by **1** daily).\
-After the `SellIn` date, the Quality increases by **2** daily.\
-The Quality still cannot exceed 50.
-
-### 3. Sulfuras, Hand of Ragnaros:
- - Its Quality is fixed at 80 and never changes.
- - Its SellIn value also does not change.
-
-### 4. Standard items (DexterityVest and ElixirMongoose)
-Quality decreases as the `SellIn` value approaches:
-- Decreases by 1 when `SellIn` value positive.
-- Decreases by 2 when `SellIn` value negative.
-
-Quality evaluated by a positive value
