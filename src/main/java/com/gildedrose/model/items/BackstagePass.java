@@ -2,8 +2,13 @@ package com.gildedrose.model.items;
 
 import com.gildedrose.model.AbstractItem;
 import com.gildedrose.model.Item;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BackstagePass extends AbstractItem {
+
+    private static final Logger logger = LoggerFactory.getLogger(BackstagePass.class);
+
     public BackstagePass(Item item) {
         super(item);
     }
@@ -22,5 +27,6 @@ public class BackstagePass extends AbstractItem {
             item.quality = MIN_QUALITY; // Quality drops to 0 after the concert
         }
         decreaseSellIn();
+        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
     }
 }

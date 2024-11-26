@@ -1,9 +1,7 @@
 package com.gildedrose;
 
-import com.gildedrose.model.Item;
-
 public class TexttestFixture {
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
         // Edit configuration to add 10 as args
 
@@ -37,6 +35,6 @@ public class TexttestFixture {
             System.out.println();
             app.updateQuality();
         }
-    }
+    }*/
 
 }
