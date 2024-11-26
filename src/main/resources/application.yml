@@ -1,5 +1,6 @@
-
-items:
+gildedrose:
+    simulation-days: 10
+    initialize-source: db # Use "db" for database initialization
     specialItems:
         "Aged Brie": com.gildedrose.model.items.AgedBrie
         "Backstage passes to a TAFKAL80ETC concert": com.gildedrose.model.items.BackstagePass
@@ -7,21 +8,21 @@ items:
 
 spring:
     datasource:
-        url: jdbc:h2:mem:special_items_db;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
         driver-class-name: org.h2.Driver
         username: sa
         password:
     h2:
         console:
             enabled: true
-            path: /h2-console # Access the H2 database at this URL
+            path: /h2-console
     jpa:
         database-platform: org.hibernate.dialect.H2Dialect
         hibernate:
-            ddl-auto: create # Automatically create tables
+            ddl-auto: none # Disable automatic schema creation by Hibernate
     sql:
         init:
-            mode: always
+            mode: always # Enable execution of SQL initialization scripts
 
 logging:
     level:

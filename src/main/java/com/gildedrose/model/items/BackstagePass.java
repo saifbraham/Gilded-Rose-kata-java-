@@ -27,6 +27,6 @@ public class BackstagePass extends AbstractItem {
             item.quality = MIN_QUALITY; // Quality drops to 0 after the concert
         }
         decreaseSellIn();
-        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
+        logger.info("Name: {}, SellIn: {}, Quality: {}", item.name, item.sellIn, item.quality);
     }
 }
