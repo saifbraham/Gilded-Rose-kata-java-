@@ -1,0 +1,17 @@
+
+items:
+    specialItems:
+        "Aged Brie": com.gildedrose.model.items.AgedBrie
+        "Backstage passes to a TAFKAL80ETC concert": com.gildedrose.model.items.BackstagePass
+        "Sulfuras, Hand of Ragnaros": com.gildedrose.model.items.Sulfuras
+
+
+logging:
+    level:
+        root: info
+    file:
+        name: target\\logs\\gilded_rose.log
+    pattern:
+        file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+

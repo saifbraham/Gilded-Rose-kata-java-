@@ -1,17 +1,29 @@
 package com.gildedrose;
 
 import com.gildedrose.model.Item;
-import com.gildedrose.model.ItemBuilder;
+import com.gildedrose.factory.ItemBuilder;
+import com.gildedrose.service.GildedRose;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
+@SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GildedRoseTest {
 
-    private GildedRose app;
+    @Autowired
+    private GildedRose gildedRose;
+
     private Item[] items;
+
+    @BeforeEach
+    void resetGildedRose() {
+        gildedRose.setItems(null); // Clear any previously initialized items
+    }
 
     @Test
     @DisplayName("Check items name and order after update quality call")
@@ -25,13 +37,14 @@ class GildedRoseTest {
             new Item("Backstage passes to a TAFKAL80ETC concert", 0, 0)
         };
 
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertThat("+5 Dexterity Vest").isEqualTo(app.getItems()[0].name);
-        assertThat("Aged Brie").isEqualTo(app.getItems()[1].name);
-        assertThat("Elixir of the Mongoose").isEqualTo(app.getItems()[2].name);
-        assertThat("Sulfuras, Hand of Ragnaros").isEqualTo(app.getItems()[3].name);
-        assertThat("Backstage passes to a TAFKAL80ETC concert").isEqualTo(app.getItems()[4].name);
+        gildedRose.initialize(items);
+        gildedRose.updateQuality();
+
+        assertThat("+5 Dexterity Vest").isEqualTo(gildedRose.getItems()[0].name);
+        assertThat("Aged Brie").isEqualTo(gildedRose.getItems()[1].name);
+        assertThat("Elixir of the Mongoose").isEqualTo(gildedRose.getItems()[2].name);
+        assertThat("Sulfuras, Hand of Ragnaros").isEqualTo(gildedRose.getItems()[3].name);
+        assertThat("Backstage passes to a TAFKAL80ETC concert").isEqualTo(gildedRose.getItems()[4].name);
     }
 
     @Test
@@ -49,12 +62,13 @@ class GildedRoseTest {
             new Item("Sulfuras, Hand of Ragnaros", 0, 80),
             new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -125,12 +139,13 @@ class GildedRoseTest {
             new Item("Backstage passes to a TAFKAL80ETC concert", 11, 25),
             new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -177,12 +192,13 @@ class GildedRoseTest {
             new Item("Backstage passes to a TAFKAL80ETC concert", 9, 35),
             new Item("Backstage passes to a TAFKAL80ETC concert", 19, 43)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -225,12 +241,13 @@ class GildedRoseTest {
             new Item("Backstage passes to a TAFKAL80ETC concert", 11, 44),
             new Item("Backstage passes to a TAFKAL80ETC concert", 18, 35)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -274,12 +291,13 @@ class GildedRoseTest {
             new Item("Backstage passes to a TAFKAL80ETC concert", 6, 38),
             new Item("Backstage passes to a TAFKAL80ETC concert", 5, 35)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -339,12 +357,13 @@ class GildedRoseTest {
             new Item("Aged Brie", 6, 48),
             new Item("Aged Brie", 5, 50)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -391,12 +410,13 @@ class GildedRoseTest {
             new Item("Aged Brie", 0, 48),
             new Item("Aged Brie", 5, 38)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -438,12 +458,12 @@ class GildedRoseTest {
             new Item("Sulfuras, Hand of Ragnaros", 0, 80),
             new Item("Sulfuras, Hand of Ragnaros", -1, 80) };
 
-        app = new GildedRose(items);
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -490,12 +510,13 @@ class GildedRoseTest {
             new Item("Elixir of the Mongoose", 2, 1),
             new Item("Elixir of the Mongoose", 4, 8),
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert
@@ -557,12 +578,13 @@ class GildedRoseTest {
             new Item("Elixir of the Mongoose", 2, 12),
             new Item("Elixir of the Mongoose", 4, 10)
         };
-        app = new GildedRose(items);
+
+        gildedRose.initialize(items);
 
         // Act
 
         for (int i = 0; i < days; i++) {
-            app.updateQuality();
+            gildedRose.updateQuality();
         }
 
         // Assert

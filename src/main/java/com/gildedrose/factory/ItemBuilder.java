@@ -1,4 +1,6 @@
-package com.gildedrose.model;
+package com.gildedrose.factory;
+
+import com.gildedrose.model.Item;
 
 public class ItemBuilder {
     private String name;

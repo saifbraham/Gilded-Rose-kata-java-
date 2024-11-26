@@ -2,8 +2,13 @@ package com.gildedrose.model.items;
 
 import com.gildedrose.model.AbstractItem;
 import com.gildedrose.model.Item;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StandardItem extends AbstractItem {
+
+    private static final Logger logger = LoggerFactory.getLogger(StandardItem.class);
+
     public StandardItem(Item item) {
         super(item);
     }
@@ -15,5 +20,6 @@ public class StandardItem extends AbstractItem {
         if (item.sellIn < 0) {
             decreaseQuality(); // Quality decreases further after sell date
         }
+        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
     }
 }
