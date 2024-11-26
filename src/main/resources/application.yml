@@ -5,6 +5,23 @@ items:
         "Backstage passes to a TAFKAL80ETC concert": com.gildedrose.model.items.BackstagePass
         "Sulfuras, Hand of Ragnaros": com.gildedrose.model.items.Sulfuras
 
+spring:
+    datasource:
+        url: jdbc:h2:mem:special_items_db;DB_CLOSE_DELAY=-1
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+    h2:
+        console:
+            enabled: true
+            path: /h2-console # Access the H2 database at this URL
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: create # Automatically create tables
+    sql:
+        init:
+            mode: always
 
 logging:
     level:
