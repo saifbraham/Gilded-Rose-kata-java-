@@ -20,6 +20,6 @@ public class StandardItem extends AbstractItem {
         if (item.sellIn < 0) {
             decreaseQuality(); // Quality decreases further after sell date
         }
-        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
+        logger.info("Name: {}, SellIn: {}, Quality: {}", item.name, item.sellIn, item.quality);
     }
 }

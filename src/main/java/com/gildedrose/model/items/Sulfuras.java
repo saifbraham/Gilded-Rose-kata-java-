@@ -16,6 +16,6 @@ public class Sulfuras extends AbstractItem {
     @Override
     public void update() {
         // Sulfuras does not change in quality or sell-in
-        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
+        logger.info("Name: {}, SellIn: {}, Quality: {}", item.name, item.sellIn, item.quality);
     }
 }

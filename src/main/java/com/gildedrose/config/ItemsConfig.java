@@ -7,10 +7,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@ConfigurationProperties(prefix = "items")
+@ConfigurationProperties(prefix = "gildedrose")
 public class ItemsConfig {
 
+    private String initializeSource; // Source for initialization (config or db)
     private Map<String, String> specialItems = new HashMap<>(); // Default to empty map
+    private int simulationDays;
+
+    public int getSimulationDays() {
+        return simulationDays;
+    }
+
+    public void setSimulationDays(int simulationDays) {
+        this.simulationDays = simulationDays;
+    }
+
+    public String getInitializeSource() {
+        return initializeSource;
+    }
+
+    public void setInitializeSource(String initializeSource) {
+        this.initializeSource = initializeSource;
+    }
 
     public Map<String, String> getSpecialItems() {
         return specialItems;

@@ -20,6 +20,6 @@ public class AgedBrie extends AbstractItem {
         if (item.sellIn < 0) {
             increaseQuality(); // Aged Brie improves further after sell date
         }
-        logger.debug("{}, {}, {} ", item.name, item.sellIn, item.quality);
+        logger.info("Name: {}, SellIn: {}, Quality: {}", item.name, item.sellIn, item.quality);
     }
 }
