@@ -15,13 +15,16 @@ public class Conjured extends AbstractItem {
 
     @Override
     public void update() {
-        decreaseQuality();
-        decreaseQuality();
+        decreaseQualityTwice();
         decreaseSellIn();
         if (item.sellIn < 0) {
-            decreaseQuality();
-            decreaseQuality();
+            decreaseQualityTwice();
         }
         logger.info("Name: {}, SellIn: {}, Quality: {}", item.name, item.sellIn, item.quality);
+    }
+
+    private void decreaseQualityTwice() {
+        decreaseQuality();
+        decreaseQuality();
     }
 }
