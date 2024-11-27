@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/gilded-rose")
@@ -45,7 +46,7 @@ public class GildedRoseController {
             gildedRose.updateQuality();
         }
 
-        List<JsonItem> updatedJsonItems = List.of(gildedRose.getItems()).stream()
+        List<JsonItem> updatedJsonItems = Stream.of(gildedRose.getItems())
             .map(JsonItem::fromLegacyItem)
             .toList();
 
