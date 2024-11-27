@@ -3,8 +3,6 @@ package com.gildedrose.factory;
 import com.gildedrose.model.Item;
 import com.gildedrose.model.UpdatableItem;
 import com.gildedrose.model.items.StandardItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,8 +14,6 @@ public class UpdatableItemFactory {
 
     private final Map<String, Function<Item, UpdatableItem>> ITEM_CREATORS = new HashMap<>();
 
-    private static final Logger logger = LoggerFactory.getLogger(UpdatableItemFactory.class);
-
     /**
      * Registers an item by its class name. The item is instantiated lazily when needed.
      *
@@ -25,7 +21,6 @@ public class UpdatableItemFactory {
      * @param className the fully qualified class name of the UpdatableItem
      */
     public void registerItem(String itemName, String className) {
-        logger.debug("Registering item: " + itemName + " with class: " + className);
         ITEM_CREATORS.put(itemName, item -> instantiateItem(className, item));
     }
 
