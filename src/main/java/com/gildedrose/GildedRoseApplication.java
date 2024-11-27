@@ -3,7 +3,6 @@ package com.gildedrose;
 import com.gildedrose.config.ItemsConfig;
 import com.gildedrose.factory.ItemBuilder;
 import com.gildedrose.model.Item;
-import com.gildedrose.repository.SpecialItemRepository;
 import com.gildedrose.service.GildedRose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GildedRoseApplication implements CommandLineRunner {
 
     private final GildedRose gildedRose;
-    private ItemsConfig itemsConfig;
+    private final ItemsConfig itemsConfig;
 
     private static final Logger logger = LoggerFactory.getLogger(GildedRose.class);
 
@@ -28,7 +27,7 @@ public class GildedRoseApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         try {
             // Initialize items
@@ -41,7 +40,8 @@ public class GildedRoseApplication implements CommandLineRunner {
                 new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-                new Item("Conjured Mana Cake", 3, 6)
+                new Item("Conjured Mana Cake", 3, 6),
+                new Item("Conjured Mana Cake", 3, 25)
             };
 
             // Print the initial items to the console
