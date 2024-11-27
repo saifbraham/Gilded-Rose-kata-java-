@@ -20,7 +20,7 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.H2Dialect
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: none
     sql:
         init:
             mode: always # Enable execution of SQL initialization scripts
