@@ -628,5 +628,105 @@ class GildedRoseTest {
         softly.assertAll();
     }
 
+    @Test
+    @DisplayName("Conjured Mana Cake item - decrease quality by 2 if sellIn > 0 and min value 0")
+    @Order(11)
+    void givenConjuredItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalledAndSellInPositive_thenShouldDecreaseQualityByTwoAndMinValueIsZero(){
+
+        // Arrange
+
+        int days = 5;
+        items = new Item[] {
+            new Item("Conjured Mana Cake", 6, 5),
+            new Item("Conjured Mana Cake", 7, 50),
+            new Item("Conjured Mana Cake", 8, 1),
+            new Item("Conjured Mana Cake", 5, 10),
+            new Item("Conjured Mana Cake", 9, 18)
+        };
+
+        gildedRose.initialize(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            gildedRose.updateQuality();
+        }
+
+        // Assert
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {1, 2, 3, 0, 4};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {0, 40, 0, 0, 8};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            softly.assertThat(item.sellIn)
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.quality)
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
+    @Test
+    @DisplayName("Conjured Mana Cake item - decrease quality by 4 if sellIn < 0 and min value 0")
+    @Order(11)
+    void givenConjuredItemWithDifferentValueOfSellIn_whenUpdateQualityIsCalledAndSellInNegative_thenShouldDecreaseQualityByFourAndMinValueIsZero(){
+
+        // Arrange
+
+        int days = 5;
+        items = new Item[] {
+            new Item("Conjured Mana Cake", 6, 5),
+            new Item("Conjured Mana Cake", 5, 50),
+            new Item("Conjured Mana Cake", 4, 18),
+            new Item("Conjured Mana Cake", 3, 18),
+            new Item("Conjured Mana Cake", 2, 18)
+        };
+
+        gildedRose.initialize(items);
+
+        // Act
+
+        for (int i = 0; i < days; i++) {
+            gildedRose.updateQuality();
+        }
+
+        // Assert
+
+        // Expected sellIn values after 10 days
+        int[] expectedSellIn = {1, 0, -1, -2, -3};
+
+        // Expected quality values after 10 days
+        int[] expectedQuality = {0, 40, 6, 4, 2};
+
+        // Initialize SoftAssertions
+        SoftAssertions softly = new SoftAssertions();
+
+        // Iterate over each item and assert its properties
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            softly.assertThat(item.sellIn)
+                .as("Item %d: SellIn", i+1)
+                .isEqualTo(expectedSellIn[i]);
+            softly.assertThat(item.quality)
+                .as("Item %d: Quality", i+1)
+                .isEqualTo(expectedQuality[i]);
+        }
+
+        // Collect and report all assertion errors
+        softly.assertAll();
+    }
+
 
 }

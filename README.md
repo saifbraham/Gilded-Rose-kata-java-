@@ -117,3 +117,7 @@ Quality decreases as the `SellIn` value approaches:
 - Decreases by 2 when `SellIn` value negative.
 
 Quality evaluated by a positive value
+
+### 5. Conjured Items:
+ - Degrade in Quality twice as fast as regular items (by 2 daily).
+ - If SellIn is 0 or less, the Quality decreases by 4 daily.
