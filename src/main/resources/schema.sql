@@ -1,4 +1,4 @@
-CREATE TABLE SPECIAL_ITEM (
-                              name VARCHAR(255) PRIMARY KEY,
-                              class_name VARCHAR(255)
-);
+CREATE TABLE IF NOT EXISTS SPECIAL_ITEM (
+    name VARCHAR(255) PRIMARY KEY,
+    class_name VARCHAR(255)
+    );
