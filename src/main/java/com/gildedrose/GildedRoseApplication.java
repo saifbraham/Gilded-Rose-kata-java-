@@ -54,6 +54,9 @@ public class GildedRoseApplication implements CommandLineRunner {
             gildedRose.initialize(items);
 
             int days = itemsConfig.getSimulationDays();
+            if(days < 0){
+                throw new IllegalArgumentException("days must be a positive integer");
+            }
             logger.info("Simulating quality updates for {} days", days);
             for (int i = 0; i < days; i++) {
                 logger.info("Day {}: Updating quality...", i + 1);
