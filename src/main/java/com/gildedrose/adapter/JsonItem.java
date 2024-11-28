@@ -3,18 +3,24 @@ package com.gildedrose.adapter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gildedrose.model.Item;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 public class JsonItem {
 
+    @NotBlank(message = "Item name must not be blank")
     private String name;
-    private int sellIn;
-    private int quality;
+
+    private Integer sellIn;
+
+    @Min(value = 0, message = "Quality must be at least 0")
+    private Integer quality;
 
     @JsonCreator
     public JsonItem(
         @JsonProperty("name") String name,
-        @JsonProperty("sellIn") int sellIn,
-        @JsonProperty("quality") int quality) {
+        @JsonProperty("sellIn") Integer  sellIn,
+        @JsonProperty("quality") Integer  quality) {
         this.name = name;
         this.sellIn = sellIn;
         this.quality = quality;

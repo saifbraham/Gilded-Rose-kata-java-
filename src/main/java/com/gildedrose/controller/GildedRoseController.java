@@ -3,6 +3,7 @@ package com.gildedrose.controller;
 import com.gildedrose.adapter.JsonItem;
 import com.gildedrose.model.Item;
 import com.gildedrose.service.GildedRose;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,10 @@ public class GildedRoseController {
     @PostMapping("/update-quality/{days}")
     public Mono<ResponseEntity<Map<String, List<JsonItem>>>> updateQuality(
         @PathVariable int days,
-        @RequestBody Flux<JsonItem> jsonItemsFlux) {
-
+        @RequestBody @Valid Flux<JsonItem> jsonItemsFlux) {
+        if(days < 0){
+            throw new IllegalArgumentException("days must be a positive integer");
+        }
         return jsonItemsFlux
             .map(JsonItem::toLegacyItem) // Convert JsonItem to legacy Item
             .collectList()              // Collect all items into a List

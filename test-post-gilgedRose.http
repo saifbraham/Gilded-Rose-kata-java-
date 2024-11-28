@@ -1,3 +1,4 @@
+### Valid POST request
 POST http://localhost:8080/api/gilded-rose/update-quality/10
 Content-Type: application/json
 
@@ -9,3 +10,27 @@ Content-Type: application/json
     {"name": "Backstage passes to a TAFKAL80ETC concert", "sellIn": 6, "quality": 20},
     {"name": "Conjured Mana Cake", "sellIn": 50, "quality": 20}
 ]
+
+
+### Negative day POST request
+POST http://localhost:8080/api/gilded-rose/update-quality/-1
+Content-Type: application/json
+
+[
+    {"name": "+5 Dexterity Vest", "sellIn": 6, "quality": 20},
+    {"name": "Aged Brie", "sellIn": 5, "quality": 25},
+    {"name": "Sulfuras, Hand of Ragnaros", "sellIn": 0, "quality": 80},
+    {"name": "Backstage passes to a TAFKAL80ETC concert", "sellIn": 12, "quality": 20},
+    {"name": "Backstage passes to a TAFKAL80ETC concert", "sellIn": 6, "quality": 20},
+    {"name": "Conjured Mana Cake", "sellIn": 50, "quality": 20}
+]
+
+### Missing field POST request
+POST http://localhost:8080/api/gilded-rose/update-quality/1
+Content-Type: application/json
+
+[
+
+]
+
+

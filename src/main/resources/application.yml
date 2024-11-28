@@ -35,7 +35,9 @@ gildedrose:
 
 logging:
     level:
-        org.flywaydb: info
+        org:
+            springframework: DEBUG
+            flywaydb: DEBUG
     file:
         name: target\\logs\\gilded_rose.log
     pattern:
