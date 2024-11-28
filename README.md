@@ -17,7 +17,7 @@ This will create a directory named GildedRose-Refactoring-Kata containing the pr
 Within the cloned repository, navigate to the Java directory:
 
 ```
-cd GildedRose-Refactoring-Kata/Java
+cd Gilded-Rose-kata-java-/Java
 ```
 
 This directory contains the Java implementation of the kata.
@@ -71,7 +71,13 @@ In the Run/Debug Configurations dialog, locate the configuration for `YourTestMa
 
 In the `Program arguments` field, enter the arguments you wish to pass to the `main` method. For example: `10`.
 
+# Rest Api
+### .http file with intellij
+ - Start spring boot application
+ - Open test-post-gildedrose.http file
+ - Execute Http Post request
 
+## POST http://localhost:8080/api/gilded-rose/update-quality/10
 
 
 

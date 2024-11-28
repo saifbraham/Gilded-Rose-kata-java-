@@ -33,7 +33,7 @@ public class GildedRoseController {
      * @param jsonItemsFlux the stream of JSON items to process
      * @return the list of daily changes for each item
      */
-    @PostMapping("/update-quality/{days}")
+    @PostMapping("/update-quality/{days}") // POST http://localhost:8080/api/gilded-rose/update-quality/10
     public Mono<ResponseEntity<Map<String, List<JsonItem>>>> updateQuality(
         @PathVariable int days,
         @RequestBody @Valid Flux<JsonItem> jsonItemsFlux) {
