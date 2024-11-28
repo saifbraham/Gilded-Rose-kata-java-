@@ -1,3 +1,28 @@
+server:
+    port: 8080
+
+spring:
+    r2dbc:
+        url: r2dbc:h2:mem:///testdb;DB_CLOSE_DELAY=-1 # Reactive H2 database URL
+        username: sa
+        password: # Leave blank for H2
+    flyway:
+        enabled: true # Enable Flyway for schema management
+        locations: classpath:db/migration # Path to migration scripts
+
+
+    h2:
+        console:
+            enabled: true # Enable H2 console
+            path: /h2-console # Path to access the console
+    sql:
+        init:
+            mode: never # Prevent Spring SQL initialization since Flyway is used
+
+    jpa:
+        hibernate:
+            ddl-auto: none
+
 gildedrose:
     simulation-days: 10
     initialize-source: db # Use "db" for database initialization
@@ -7,27 +32,10 @@ gildedrose:
         "Sulfuras, Hand of Ragnaros": com.gildedrose.model.items.Sulfuras
         "Conjured Mana Cake": com.gildedrose.model.items.Conjured
 
-spring:
-    datasource:
-        url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-        driver-class-name: org.h2.Driver
-        username: sa
-        password:
-    h2:
-        console:
-            enabled: true
-            path: /h2-console
-    jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        hibernate:
-            ddl-auto: none
-    sql:
-        init:
-            mode: always # Enable execution of SQL initialization scripts
 
 logging:
     level:
-        root: info
+        org.flywaydb: info
     file:
         name: target\\logs\\gilded_rose.log
     pattern:
