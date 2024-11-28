@@ -6,8 +6,12 @@ import com.gildedrose.service.GildedRose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @RestController
@@ -22,35 +26,40 @@ public class GildedRoseController {
     }
 
     /**
-     * Updates item qualities for the specified number of days.
+     * Updates item qualities for the specified number of days and tracks daily changes.
      *
      * @param days the number of days to simulate
-     * @param jsonItems the list of json items to process
-     * @return the updated list of items
+     * @param jsonItemsFlux the stream of JSON items to process
+     * @return the list of daily changes for each item
      */
     @PostMapping("/update-quality/{days}")
-    public ResponseEntity<List<JsonItem>> updateQuality(
+    public Mono<ResponseEntity<Map<String, List<JsonItem>>>> updateQuality(
         @PathVariable int days,
-        @RequestBody List<JsonItem> jsonItems) {
+        @RequestBody Flux<JsonItem> jsonItemsFlux) {
 
-        // Convert JsonItem to legacy Item
-        List<Item> legacyItems = jsonItems.stream()
-            .map(JsonItem::toLegacyItem)
-            .toList();
+        return jsonItemsFlux
+            .map(JsonItem::toLegacyItem) // Convert JsonItem to legacy Item
+            .collectList()              // Collect all items into a List
+            .flatMap(legacyItems -> {
+                // Initialize the GildedRose instance with items
+                gildedRose.initialize(legacyItems.toArray(new Item[0]));
 
-        // Initialize the GildedRose instance with items
-        gildedRose.initialize(legacyItems.toArray(new Item[0]));
+                // Track daily changes
+                Map<String, List<JsonItem>> dailyChanges = new LinkedHashMap<>();
 
-        // Update quality for the given number of days
-        for (int i = 0; i < days; i++) {
-            gildedRose.updateQuality();
-        }
+                // Simulate each day
+                for (int i = 0; i < days; i++) {
+                    gildedRose.updateQuality();
 
-        List<JsonItem> updatedJsonItems = Stream.of(gildedRose.getItems())
-            .map(JsonItem::fromLegacyItem)
-            .toList();
+                    // For each day, add the updated items to the daily changes map
+                    List<JsonItem> dailyItems = Stream.of(gildedRose.getItems())
+                        .map(JsonItem::fromLegacyItem)
+                        .toList();
+                    dailyChanges.put("Day" + (i + 1), dailyItems);
+                }
 
-        // Return the updated list of items
-        return ResponseEntity.ok(updatedJsonItems);
+                // Return the map of daily changes
+                return Mono.just(ResponseEntity.ok(dailyChanges));
+            });
     }
 }

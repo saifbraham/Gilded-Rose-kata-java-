@@ -1,7 +1,7 @@
 package com.gildedrose.repository;
 
 import com.gildedrose.entity.SpecialItem;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-public interface SpecialItemRepository extends JpaRepository<SpecialItem, String> {
+public interface SpecialItemRepository extends ReactiveCrudRepository<SpecialItem, String> {
 }

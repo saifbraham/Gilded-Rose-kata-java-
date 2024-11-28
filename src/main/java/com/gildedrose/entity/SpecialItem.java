@@ -2,9 +2,11 @@ package com.gildedrose.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Entity
-public class SpecialItem {
+@Table("SPECIAL_ITEM") // Flayway configuration needed
+public class SpecialItem implements Comparable<SpecialItem>{
 
     @Id
     private String name; // The name of the special item
@@ -24,7 +26,13 @@ public class SpecialItem {
         return className;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    @Override
+    public int compareTo(SpecialItem other) {
+        return this.name.compareTo(other.name); // Sort by name (or any other field)
+    }
+
+    @Override
+    public String toString() {
+        return "SpecialItem{name='" + name + "', className='" + className + "'}";
     }
 }

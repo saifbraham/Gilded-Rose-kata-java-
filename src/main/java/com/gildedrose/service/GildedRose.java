@@ -10,14 +10,16 @@ import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Service
+@DependsOn("flyway")
 public class GildedRose {
 
     private Item[] items;
@@ -46,7 +48,10 @@ public class GildedRose {
             initializeSpecialItemsByConfig();
         } else if ("db".equalsIgnoreCase(initializeSource)) {
             logger.info("Initializing special items from database...");
-            initializeSpecialItemsByDB();
+            initializeSpecialItemsByDB()
+                .doOnError(error -> logger.error("Error initializing special items from database", error))
+                .doOnSuccess(unused -> logger.info("Special items initialized from database successfully"))
+                .subscribe();
         } else {
             throw new IllegalArgumentException("Invalid initialize-source: " + initializeSource);
         }
@@ -60,15 +65,26 @@ public class GildedRose {
         }
     }
 
-    private void initializeSpecialItemsByDB() {
-        List<SpecialItem> specialItems = specialItemRepository.findAll();
-        if (specialItems.isEmpty()) {
-            logger.warn("No special items found in the database!");
-        } else {
-            specialItems.forEach(item -> updatableItemFactory.registerItem(item.getName().replaceAll("[^a-zA-Z0-9]", ""), item.getClassName()));
-            logger.info("Special items initialized from database: {}",
-                specialItems.stream().map(SpecialItem::getName).toList());
-        }
+    private Mono<Void> initializeSpecialItemsByDB() {
+        return specialItemRepository.findAll()
+            .doOnNext(item -> logger.info("Found special item: {}", item))
+            .collectSortedList()
+            .flatMap(specialItems -> {
+                if (specialItems.isEmpty()) {
+                    logger.warn("No special items found in the database!");
+                    return Mono.empty();
+                } else {
+                    specialItems.forEach(item ->
+                        updatableItemFactory.registerItem(
+                            item.getName().replaceAll("[^a-zA-Z0-9]", ""),
+                            item.getClassName()
+                        )
+                    );
+                    logger.info("Special items initialized from database: {}",
+                        specialItems.stream().map(SpecialItem::getName).toList());
+                    return Mono.empty();
+                }
+            });
     }
 
     public void initialize(Item[] items) {
